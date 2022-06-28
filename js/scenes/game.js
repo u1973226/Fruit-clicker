@@ -10,6 +10,7 @@ class GameScene extends Phaser.Scene {
 		this.add_point = 0;
 		this.game_over = false;
 		this.array_objects = ['Apple', 'Banana', 'Pear', 'Strawberry', 'Poison'];
+		this.g_array_objects = ['Golden Apple', 'Golden Banana', 'Golden Pear', 'Golden Strawberry'];
 		this.buttons = true;
 		this.rect = null;
     }
@@ -20,7 +21,11 @@ class GameScene extends Phaser.Scene {
 		this.load.image('Pear', '../resources/Pear 2.png');
 		this.load.image('Strawberry', '../resources/Strawberry.png');
 		this.load.image('Poison', '../resources/Poison but clearer.png');
-		this.load.image('Rectangle', '../resources/rectangulus.png')
+		this.load.image('Rectangle', '../resources/rectangulus.png');
+		this.load.image('Golden Apple', '../resources/Golden Apple.png');
+		this.load.image('Golden Banana', '../resources/Golden Banana.png');
+		this.load.image('Golden Pear', '../resources/Golden Pear.png');
+		this.load.image('Golden Strawberry', '../resources/Golden Strawberry.png');
 	}
 
     create (){
@@ -68,7 +73,7 @@ class GameScene extends Phaser.Scene {
 				loadpage("./phasergame.html");
 			});
 
-			this.exitButton = this.add.text(310, 500, 'Go to menu', {fontSize: '32px', fill:'#000'})
+			/*this.exitButton = this.add.text(310, 500, 'Go to menu', {fontSize: '32px', fill:'#000'})
 			.setInteractive({ useHandCursor: true })
 			.on('pointerover', () => this.exitButton.setStyle({ fill: 'grey'}))
 			.on('pointerout', () => {
@@ -84,7 +89,7 @@ class GameScene extends Phaser.Scene {
 				this.exitButton.setStyle({ fontSize: '32px'})
 				this.exitButton.setPosition(310, 500)
 				loadpage("../")
-			});
+			});*/
 			this.buttons = false;
 		}
 	}
@@ -99,7 +104,14 @@ class GameScene extends Phaser.Scene {
 }	
 
 function timerCall() {
-	let random_thing = this.array_objects[Phaser.Math.RND.between(0, 4)];
+	let odds = Phaser.Math.RND.between(0, 100);
+	let random_thing;
+	if (odds > 85) {
+		random_thing = this.g_array_objects[Phaser.Math.RND.between(0, 3)];
+	}
+	else {
+		random_thing = this.array_objects[Phaser.Math.RND.between(0, 4)];
+	}
 	var thing = this.froot_n_poison.create(Phaser.Math.RND.between(25, 775), -100, random_thing);
 		thing.name = random_thing;
 		thing.setInteractive({ useHandCursor: true });
@@ -110,7 +122,8 @@ function timerCall() {
 					this.game_over = true;
 				}
 				else {
-					this.score += 1;
+					if (odds > 85) this.score += 3;
+					else this.score += 1;
 					thing.disableBody(true,true);
 				}
 			}
