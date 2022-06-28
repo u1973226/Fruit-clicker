@@ -36,21 +36,10 @@ button.menu-object:active{
 	height: 70px;
 }
 
-/*button.gotomenu:active{
-	font-size: 14px;
-	width: 225px;
-	height: 45px;
-}ks
-
-button.gotomenu:hover:not(:active){
-	font-size: 18px;
-	width: 275px;
-	height: 60px;
-}*/
-
 button.menu-object:hover:not(:active){
 	font-size: 22px;
 	width: 325px;
 	height: 85px;
+	background-color: #BFFCFF;
 }
 

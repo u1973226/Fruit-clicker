@@ -13,6 +13,7 @@ class GameScene extends Phaser.Scene {
 		this.g_array_objects = ['Golden Apple', 'Golden Banana', 'Golden Pear', 'Golden Strawberry'];
 		this.buttons = true;
 		this.rect = null;
+		this.poison_mode = prompt("Choose poison mode: '-1 points' or 'Game over' ") || "Game over";
     }
 
     preload (){	
@@ -73,7 +74,7 @@ class GameScene extends Phaser.Scene {
 				loadpage("./phasergame.html");
 			});
 
-			/*this.exitButton = this.add.text(310, 500, 'Go to menu', {fontSize: '32px', fill:'#000'})
+			this.exitButton = this.add.text(310, 500, 'Go to menu', {fontSize: '32px', fill:'#000'})
 			.setInteractive({ useHandCursor: true })
 			.on('pointerover', () => this.exitButton.setStyle({ fill: 'grey'}))
 			.on('pointerout', () => {
@@ -88,8 +89,8 @@ class GameScene extends Phaser.Scene {
 			.on('pointerup', () => {
 				this.exitButton.setStyle({ fontSize: '32px'})
 				this.exitButton.setPosition(310, 500)
-				loadpage("../")
-			});*/
+				loadpage("../index.html")
+			});
 			this.buttons = false;
 		}
 	}
@@ -119,7 +120,8 @@ function timerCall() {
 			if (!this.game_over) {
 				if (thing.name === 'Poison') {
 					thing.disableBody(true,true);
-					this.game_over = true;
+					if (this.poison_mode == '-1 points') this.score -= 1;
+					else this.game_over = true;
 				}
 				else {
 					if (odds > 85) this.score += 3;
